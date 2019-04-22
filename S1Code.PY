@@ -2,6 +2,8 @@
 Perceptual decision-making task, loosely based on the random dot motion task.
 
 """
+from __future__ import division
+
 import numpy as np
 
 from pycog import Model, RNN, tasktools
@@ -28,7 +30,7 @@ Cout[:,EXC] = 1
 cohs        = [1, 2, 4, 8, 16]
 left_rights = [1, -1]
 nconditions = len(cohs)*len(left_rights)
-pcatch      = 1/float(nconditions + 1)
+pcatch      = 1/(nconditions + 1)
 
 SCALE = 3.2
 def scale(coh):
