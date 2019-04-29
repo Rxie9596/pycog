@@ -98,3 +98,8 @@ pip install cython==0.23.4
 pip install networkx==1.10
 pip install matplotlib==1.4.3
 ```
+Other useful commands:
+```
+export PYTHONPATH="${PYTHONPATH}:/Users/yuxie/Lab/RNN/pycog/pycog"
+conda remove --name RNN --all
+```
