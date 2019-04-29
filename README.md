@@ -114,7 +114,7 @@ Other useful commands:
 ```
 conda remove --name RNN --all
 ```
-Add the following to `/.bash_profile` to add pycog to `$PYTHONPATH`
+Add the following to `/.bash_profile`(on MacOS) or `/.bash_profile`(on Linux) to add pycog to `$PYTHONPATH`
 ```
 export PYTHONPATH="${PYTHONPATH}:/Users/yuxie/Lab/RNN/pycog"
 ```
