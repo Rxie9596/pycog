@@ -96,5 +96,5 @@ pip install scipy==0.11
 pip install theano==0.7
 pip install cython
 pip install networkx
-pip install matplotlib
+pip install matplotlib=2.0
 ```
