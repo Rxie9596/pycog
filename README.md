@@ -109,6 +109,10 @@ pip install cython
 pip install networkx
 pip install matplotlib
 ```
+Additional,
+```
+conda install mkl
+```
 
 Other useful commands:
 ```
