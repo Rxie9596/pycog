@@ -126,3 +126,9 @@ To show `$PYTHONPATH`
 ```
 echo $PYTHONPATH
 ```
+
+show package
+```
+conda list
+pip freeze
+```
