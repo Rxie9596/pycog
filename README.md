@@ -101,5 +101,6 @@ pip install matplotlib==1.4.3
 Other useful commands:
 ```
 export PYTHONPATH="${PYTHONPATH}:/Users/yuxie/Lab/RNN/pycog/pycog"
+echo $PYTHONPATH
 conda remove --name RNN --all
 ```
