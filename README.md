@@ -91,10 +91,10 @@ Installing environment:
 conda create --name RNN python=2.7
 source activate RNN
 
-pip install numpy==1.7.1
+pip install numpy==1.7
 pip install scipy==0.16
 pip install theano==0.7
 pip install cython==0.23.4
 pip install networkx==1.10
-pip install matplotlib==2.0
+pip install matplotlib==1.4.3
 ```
