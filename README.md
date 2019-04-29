@@ -84,3 +84,17 @@ MIT
 This code is the product of work carried out in the group of [Xiao-Jing Wang at New York University](http://www.cns.nyu.edu/wanglab/). If you find our code helpful to your work, consider giving us a shout-out in your publications:
 
 * Song, H. F.\*, Yang, G. R.\*, & Wang, X.-J. "Training Excitatory-Inhibitory Recurrent Neural Networks for Cognitive Tasks: A Simple and Flexible Framework." *PLoS Comp. Bio.* 12, e1004792 (2016). (\* = equal contribution)
+
+## Added by Yu Xie
+Installing environment:
+```
+conda create --name RNN python=2.7
+source activate RNN
+
+pip install numpy==0.7
+pip install scipy==0.11
+pip install theano==0.7
+pip install cython
+pip install networkx
+pip install matplotlib
+```
