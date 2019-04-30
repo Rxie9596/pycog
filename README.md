@@ -134,3 +134,15 @@ show package
 conda list
 pip freeze
 ```
+
+### Actions to perform
+```
+python do.py models/sinewave train
+python do.py models/sinewave check
+python do.py models/sinewave clean
+python do.py models/sinewave submit
+python do.py models/sinewave restingstate
+python do.py models/sinewave structure
+python do.py models/sinewave costs
+python do.py models/sinewave run
+```
