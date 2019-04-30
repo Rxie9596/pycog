@@ -109,16 +109,28 @@ pip install cython
 pip install networkx
 pip install matplotlib
 ```
+Additional,
+```
+conda install mkl
+conda install mkl-service
+pip install mkl
+```
 
 Other useful commands:
 ```
 conda remove --name RNN --all
 ```
-Add the following to `/.bash_profile` to add pycog to `$PYTHONPATH`
+Add the following to `/.bash_profile`(on MacOS) or `/.bash_profile`(on Linux) to add pycog to `$PYTHONPATH`
 ```
 export PYTHONPATH="${PYTHONPATH}:/Users/yuxie/Lab/RNN/pycog"
 ```
 To show `$PYTHONPATH`
 ```
 echo $PYTHONPATH
+```
+
+show package
+```
+conda list
+pip freeze
 ```
