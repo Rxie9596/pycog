@@ -146,8 +146,9 @@ python do.py models/task_name costs
 ```
 3. plot network structure
 ```
-python do.py models/task_name structure init    # plot initial structure
-python do.py models/task_name structure         # plot structure after training
+python do.py models/task_name structure init            # plot initial structure
+python do.py models/task_name structure                 # plot structure after training
+python do.py models/task_name structure selectivity     # sort by selectivity or other criteria
 ```
 4. plot network output when there is no input (restingstate)
 ```
