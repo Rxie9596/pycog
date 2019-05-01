@@ -136,13 +136,41 @@ pip freeze
 ```
 
 ### Actions to perform
+1.traning network
 ```
-python do.py models/sinewave train
-python do.py models/sinewave check
-python do.py models/sinewave clean
-python do.py models/sinewave submit
-python do.py models/sinewave restingstate
-python do.py models/sinewave structure
-python do.py models/sinewave costs
-python do.py models/sinewave run
+python do.py models/task_name train
 ```
+2.plot cost history
+```
+python do.py models/task_name costs
+```
+3.plot network structure
+```
+python do.py models/task_name structure init    # plot initial structure
+python do.py models/task_name structure         # plot structure after training
+```
+4.plot network output when there is no input (restingstate)
+```
+python do.py models/task_name restingstate
+```
+5.run analysis
+```
+python do.py models/task_name run
+```
+6.check log file
+```
+python do.py models/task_name check
+```
+7.clean up files and documents
+```
+python do.py models/task_name clean
+```
+8.submit jobs when using on the cluster
+```
+python do.py models/task_name submit
+```
+
+
+
+
+
