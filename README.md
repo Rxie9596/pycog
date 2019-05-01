@@ -151,7 +151,8 @@ python do.py models/task_name structure         # plot structure after training
 ```
 4. plot network output when there is no input (restingstate)
 ```
-python do.py models/task_name restingstate
+python do.py models/task_name restingstate init    # plot initial restingstate response
+python do.py models/task_name restingstate         # plot restingstate response after training
 ```
 5. run analysis
 ```
