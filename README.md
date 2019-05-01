@@ -111,8 +111,11 @@ pip install matplotlib
 ```
 Additional,
 ```
-conda install mkl
 conda install mkl-service
+```
+The following just for reference
+```
+conda install mkl
 pip install mkl
 ```
 
