@@ -86,18 +86,7 @@ This code is the product of work carried out in the group of [Xiao-Jing Wang at 
 * Song, H. F.\*, Yang, G. R.\*, & Wang, X.-J. "Training Excitatory-Inhibitory Recurrent Neural Networks for Cognitive Tasks: A Simple and Flexible Framework." *PLoS Comp. Bio.* 12, e1004792 (2016). (\* = equal contribution)
 
 ## Added by Yu Xie
-Installing environment (not on MacOS):
-```
-conda create --name RNN python=2.7
-source activate RNN
 
-pip install numpy==1.6.2
-pip install scipy==0.16
-pip install theano==0.7
-pip install cython==0.23.4
-pip install networkx==1.10
-pip install matplotlib==1.4.3
-```
 Installing environment (on MacOS): do not build the .c file
 ```
 conda create --name RNN python=2.7
@@ -117,6 +106,19 @@ The following just for reference
 ```
 conda install mkl
 pip install mkl
+```
+
+Installing environment (currently not working):
+```
+conda create --name RNN python=2.7
+source activate RNN
+
+pip install numpy==1.6.2
+pip install scipy==0.16
+pip install theano==0.7
+pip install cython==0.23.4
+pip install networkx==1.10
+pip install matplotlib==1.4.3
 ```
 
 Other useful commands:
