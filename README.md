@@ -162,7 +162,7 @@ python do.py models/task_name restingstate         # plot restingstate response 
 ```
 5. run analysis
 ```
-python do.py models/task_name run
+python do.py models/task_name run analysis_script actions
 ```
 6. check log file
 ```
