@@ -178,6 +178,175 @@ python do.py models/task_name submit
 ```
 
 
+## All used commands
+```
+python all.py -s
+=> Perceptual decision-making task
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim train -s 1001 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm trials 4000 --dt_save 20
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm sort_stim_onset
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm units_stim_onset
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt train -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm trials 1500 --dt_save 10
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm sort_response
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm units_response
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_rdm.py
+=> Perceptual decision-making task (structure)
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale train -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm trials 2000 --dt_save 100
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm selectivity
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense train -s 101 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm trials 2000 --dt_save 100
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm selectivity
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed train -s 1001 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm trials 2000 --dt_save 100
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed run /Users/yuxie/Lab/RNN/pycog/examples/analysis/rdm selectivity
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_structure.py
+=> Context-dependent integration task
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante train -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante trials 200 --dt_save 20
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante sort
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante regress
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante units
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_mante.py
+=> Context-dependent integration task (areas)
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas train -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante trials 200 --dt_save 20
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante sort
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante regress
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas run /Users/yuxie/Lab/RNN/pycog/examples/analysis/mante units
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_mante_areas.py
+=> Connectivity for sequence execution task
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_connectivity.py
+=> Multisensory integration task
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory train -s 111 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory run /Users/yuxie/Lab/RNN/pycog/examples/analysis/multisensory trials 500 --dt_save 20
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory run /Users/yuxie/Lab/RNN/pycog/examples/analysis/multisensory sort
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory run /Users/yuxie/Lab/RNN/pycog/examples/analysis/multisensory units
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_multisensory.py
+=> Parametric working memory task
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo train -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo run /Users/yuxie/Lab/RNN/pycog/examples/analysis/romo trials 100 --dt_save 20
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo run /Users/yuxie/Lab/RNN/pycog/examples/analysis/romo sort
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo run /Users/yuxie/Lab/RNN/pycog/examples/analysis/romo units
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_romo.py
+=> Eye-movement sequence execution task
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee clean
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee train -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee run /Users/yuxie/Lab/RNN/pycog/examples/analysis/lee trials 100 --dt_save 2
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_lee.py
+=> Performance
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_rt train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_nodale train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_dense train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_fixed train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/mante_areas train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/multisensory train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/romo train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee clean --seed 1 --suffix _s1
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee train --seed 1 --suffix _s1 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee clean --seed 2 --suffix _s2
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee train --seed 2 --suffix _s2 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee clean --seed 3 --suffix _s3
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee train --seed 3 --suffix _s3 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee clean --seed 4 --suffix _s4
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee train --seed 4 --suffix _s4 -g0
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee clean --seed 5 --suffix _s5
+   python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/lee train --seed 5 --suffix _s5 -g0
+   python /Users/yuxie/Lab/RNN/pycog/paper/fig_performance.py
 
+```
 
 
