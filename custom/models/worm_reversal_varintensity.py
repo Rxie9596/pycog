@@ -45,15 +45,29 @@ def generate_trial(rng, dt, params):
     # Epochs
     # -------------------------------------------------------------------------------------
 
+    t_foward_min = 80
+    t_foward_avg = 800
+    t_foward_max = 1500
+
+    t_stimulus = 300
+
+    t_reversal_min = 80
+    t_reversal_avg = 500
+    t_reversal_max = 1500
+
     if catch_trial:
-        epochs = {'T': tasktools.truncated_exponential(rng, dt, 330, xmin=80, xmax=1500)}
+        epochs = {'T': tasktools.truncated_exponential(rng, dt, t_foward_avg,
+                                                       xmin=t_foward_min, xmax=t_foward_max)}
     else:
         if params['name'] == 'test':
-            forward = tasktools.truncated_exponential(rng, dt, 330, xmin=80, xmax=1500)
+            forward = tasktools.truncated_exponential(rng, dt, t_foward_avg,
+                                                      xmin=t_foward_min, xmax=t_foward_min)
         else:
-            forward = tasktools.truncated_exponential(rng, dt, 330, xmin=80, xmax=1500)
-        stimulus = tasktools.truncated_exponential(rng, dt, 330, xmin=80, xmax=1500)
-        reversal = tasktools.truncated_exponential(rng, dt, 330, xmin=80, xmax=1500)
+            forward = tasktools.truncated_exponential(rng, dt, t_foward_avg,
+                                                      xmin=t_foward_min, xmax=t_foward_max)
+        stimulus = t_stimulus
+        reversal = tasktools.truncated_exponential(rng, dt, t_reversal_avg,
+                                                   xmin=t_reversal_min, xmax=t_reversal_max)
         T = forward + stimulus + reversal
 
         epochs = {'fixation': (0, forward),
