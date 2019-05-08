@@ -166,3 +166,10 @@ def performance_2afc_min_condition(trials, z):
     correct = [sum(c)/len(c) for c in correct.values()]
 
     return 100*min(correct)
+
+# perfomance mesure forword to reversal
+# added by yu xie
+def perfomance_f2r(trials, z):
+    ends = [len(trial['t']) - 1 for trial in trials]
+
+    return
