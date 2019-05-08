@@ -36,8 +36,10 @@ a = p.parse_args()
 
 # Model file
 modelfile = os.path.abspath(a.model_file)
+# eg. '/Users/yuxie/Lab/RNN/pycog/custom/models/worm_reversal'
 if not modelfile.endswith('.py'):
     modelfile += '.py'
+    # eg. '/Users/yuxie/Lab/RNN/pycog/custom/models/worm_reversal.py'
 
 action  = a.action
 args    = a.args
@@ -58,24 +60,31 @@ print("SEED:      " + str(seed))
 #=========================================================================================
 
 # Location of script
-here   = get_here(__file__)
-prefix = os.path.basename(here)
+here   = get_here(__file__)      # eg. '/Users/yuxie/Lab/RNN/pycog/custom'
+prefix = os.path.basename(here)  # eg. 'custom'
 
 # Name to use
-name = os.path.splitext(os.path.basename(modelfile))[0]
+name = os.path.splitext(os.path.basename(modelfile))[0] # eg. 'worm_reversal'
 
 # Scratch
 scratchroot = os.environ.get('SCRATCH', join(os.path.expanduser('~'), 'scratch'))
+# eg. '/Users/yuxie/scratch'
 scratchpath = join(scratchroot, 'work', prefix, name)
+# eg. '/Users/yuxie/scratch/work/custom/worm_reversal'
 
 # Theano
 theanopath = join(scratchpath, 'theano')
+# eg. '/Users/yuxie/scratch/work/custom/worm_reversal/theano'
 
 # Paths
 workpath   = join(here, 'work')
+# eg. '/Users/yuxie/Lab/RNN/pycog/custom/work'
 datapath   = join(workpath, 'data', name)
+# eg. '/Users/yuxie/Lab/RNN/pycog/custom/work/data/worm_reversal'
 figspath   = join(workpath, 'figs', name)
+# eg. '/Users/yuxie/Lab/RNN/pycog/custom/work/figs/worm_reversal'
 trialspath = join(scratchpath, 'trials')
+# eg. '/Users/yuxie/scratch/work/custom/worm_reversal/trials'
 
 # Create necessary directories
 for path in [datapath, figspath, scratchpath, trialspath]:
@@ -83,6 +92,7 @@ for path in [datapath, figspath, scratchpath, trialspath]:
 
 # File to store model in
 savefile = join(datapath, name + suffix + '.pkl')
+# eg. '/Users/yuxie/Lab/RNN/pycog/custom/work/data/worm_reversal/worm_reversal.pkl'
 
 #=========================================================================================
 # Check log file
@@ -167,6 +177,7 @@ elif action == 'train':
 
     # Avoid locks on the cluster
     compiledir = join(theanopath, '{}-{}'.format(name, int(time.time())))
+    # eg. '/Users/yuxie/scratch/work/custom/worm_reversal/theano/worm_reversal-1557321793'
 
     # Train
     model.train(savefile, seed=seed, compiledir=compiledir, gpus=gpus)
