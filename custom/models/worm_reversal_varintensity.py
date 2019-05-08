@@ -1,3 +1,5 @@
+# Input and target must be changed to match different intensity
+#-----------------------------------------------------------------------------------------
 from __future__ import division
 
 import numpy as np
@@ -14,8 +16,9 @@ Nout = 2
 # Task structure
 # -----------------------------------------------------------------------------------------
 
-intensity_range  = [1]
-pcatch = 1/(10 + 1)
+intensity_range  = [0, 1, 2, 4, 8, 16]
+nconditions = len(intensity_range)
+pcatch = 1/(nconditions + 1)
 
 SCALE = 6
 def scale(inten):
@@ -32,7 +35,7 @@ def generate_trial(rng, dt, params):
         if params.get('catch', rng.rand() < pcatch):
             catch_trial = True
         else:
-            intensity = params.get('intensity', 1)
+            intensity = params.get('intensity', rng.choice(intensity_range))
     elif params['name'] == 'validation':
         raise ValueError("Validation not defined")
     else:
@@ -78,7 +81,7 @@ def generate_trial(rng, dt, params):
     X = np.zeros((len(t), Nin))
     if not catch_trial:
         # Stimulus
-        X[e['stimulus']] = intensity
+        X[e['stimulus']] = scale(intensity)
 
     trial['inputs'] = X
 
@@ -127,4 +130,4 @@ def terminate(pcorrect_history):
     return np.mean(pcorrect_history[-5:]) > TARGET_PERFORMANCE
 
 # Validation dataset
-n_validation = 100*(10 + 1)
+n_validation = 100*(nconditions + 1)
