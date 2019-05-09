@@ -135,13 +135,14 @@ def generate_trial(rng, dt, params):
 
     return trial
 
-# Performance measure
-performance = tasktools.perfomance_f2r
 
-# Termination criterion
-TARGET_PERFORMANCE = 85
-def terminate(performance_history):
-    return np.mean(performance_history[-5:]) > TARGET_PERFORMANCE
+# # Performance measure
+# performance = tasktools.perfomance_f2r
+#
+# # Termination criterion
+# TARGET_PERFORMANCE = 85
+# def terminate(performance_history):
+#     return np.mean(performance_history[-5:]) > TARGET_PERFORMANCE
 
 # Validation dataset
 n_validation = 100*(5 + 1)
