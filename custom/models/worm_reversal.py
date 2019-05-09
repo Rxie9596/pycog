@@ -17,13 +17,8 @@ Nout = 2
 # -----------------------------------------------------------------------------------------
 
 intensity_range  = [1]
-nconditions = len(intensity_range)
-pcatch = 1/(5 + 1)
-
-SCALE = 6
-def scale(inten):
-    return (1 + np.dot(SCALE, inten) / 100) / 2
-
+nconditions      = 5*len(intensity_range)
+pcatch           = 1/(nconditions + 1)
 
 def generate_trial(rng, dt, params):
     # -------------------------------------------------------------------------------------
@@ -35,9 +30,13 @@ def generate_trial(rng, dt, params):
         if params.get('catch', rng.rand() < pcatch):
             catch_trial = True
         else:
-            intensity = params.get('intensity', 1)
+            intensity = params.get('intensity', rng.choice(intensity_range))
     elif params['name'] == 'validation':
-        raise ValueError("Validation not defined")
+        b = params['minibatch_index'] % (nconditions + 1)
+        if b == 0:
+            catch_trial = True
+        else:
+            intensity = params.get('intensity', rng.choice(intensity_range))
     else:
         raise ValueError("Unknown trial type.")
 
@@ -127,6 +126,9 @@ def generate_trial(rng, dt, params):
             # Only care about forward and reversal periods
             M[e['forward']+e['reversal'],:] = 1
 
+        # Save e info
+        trial['e'] = e
+
         # Outputs and mask
         trial['outputs'] = Y
         trial['mask']    = M
@@ -136,13 +138,13 @@ def generate_trial(rng, dt, params):
     return trial
 
 
-# # Performance measure
-# performance = tasktools.perfomance_f2r
-#
-# # Termination criterion
-# TARGET_PERFORMANCE = 85
-# def terminate(performance_history):
-#     return np.mean(performance_history[-5:]) > TARGET_PERFORMANCE
+# Performance measure
+performance = tasktools.perfomance_f2r
+
+# Termination criterion
+TARGET_PERFORMANCE = 85
+def terminate(performance_history):
+    return np.mean(performance_history[-5:]) > TARGET_PERFORMANCE
 
 # Validation dataset
-n_validation = 100*(5 + 1)
+n_validation = 100*(nconditions + 1)
