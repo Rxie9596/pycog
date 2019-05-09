@@ -169,6 +169,8 @@ def performance_2afc_min_condition(trials, z):
 
 # perfomance mesure forword to reversal
 # added by yu xie
+# TODO add lower bound to indexing z[rev_starts[i]:rev_starts[i] + 5, i, 1]
+# rev_starts[i] + 5 may exceed trial length
 def perfomance_f2r(trials, z):
 
     for_ends = []
@@ -188,7 +190,8 @@ def perfomance_f2r(trials, z):
     for_dif = []
     for i, end in enumerate(for_ends):
         if for_ends[i]:
-            for_dif.append(np.mean(z[for_ends[i] - 5:for_ends[i], i, 0]))
+            prebound = max(for_ends[i] - 5 , 0)
+            for_dif.append(np.mean(z[prebound:for_ends[i]+1, i, 0]))
 
     rev_dif = []
     for i, end in enumerate(rev_starts):
