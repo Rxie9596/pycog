@@ -28,8 +28,11 @@ Input
     distribution_in : str, optional
          Distribution for the initial input weight matrix.
          None
-        
-                  
+         in trainer: if None set to 
+            if ei is not None, 'uniform'
+            if ei is None, 'uniform'
+         {'uniform', 'normal', 'lognormal', 'gamma',...}
+                           
 Recurrent
 -------
     
@@ -40,6 +43,9 @@ Recurrent
     Crec : numpy.ndarray or Connectivity, optional
          Recurrent weight structure.
          None
+         in trainer: if None set to
+            if ei is not None, blanced  see trainer line 249
+            if ei is None, 1*(N,N) with diag=0
 
     train_brec : bool, optional
          Whether to train recurrent biases.
@@ -52,6 +58,7 @@ Recurrent
     train_x0 : bool, optional
          Whether to optimize the initial conditions.
          True
+         in trainer : if mode = 'continuous' set to False
          
     x0 : float, optional
          Initial value of the initial conditions.
@@ -65,6 +72,7 @@ Recurrent
     hidden_activation : str, optional
          Hidden activation function.
          'rectify'
+         {'linear', 'rectify', 'rectify_power', 'sigmoid', 'tanh', 'rtanh', 'softplus'}
     
     var_rec : float or numpy.ndarray, optional
          If `float` or 1D `numpy.ndarray`, then recurrent units receive
@@ -75,10 +83,15 @@ Recurrent
     rho0 : float, optional
          Spectral radius for the initial recurrent weight matrix.
          1.5
+         in trainer : if ei is None, use 1.1 instead
          
     distribution_rec : str, optional
          Distribution for the initial recurrent weight matrix.
          None
+         in trainer: if None set to 
+            if ei is not None, 'gamma'
+            if ei is None, 'normal'
+         {'uniform', 'normal', 'lognormal', 'gamma',...}
 Output
 -------
     Nout : int, optional
@@ -100,12 +113,15 @@ Output
     output_activation: str, optional
          Output activation function.
          'linear'
+         {'linear', 'rectify', 'rectify_power', 'sigmoid', 'tanh', 'rtanh', 'softplus'}
     
     distribution_out : str, optional
          Distribution for the initial output weight matrix.
          None
-
-
+         in trainer: if None set to 
+            if ei is not None, 'uniform'
+            if ei is None, 'uniform'
+         {'uniform', 'normal', 'lognormal', 'gamma',...}
 Others
 -------
 
@@ -143,6 +159,7 @@ Others
     ei_positive_func : str, optional
          Function to use to keep weights positive.
          'rectify'
+         {'abs', 'rectify'}
     
     max_gradient_norm : float, optional
          Clip gradient if its norm is greater than.
@@ -204,6 +221,7 @@ Others
     dt : float, optional
          Integration time step.
          None
+         in trainer: if None set to min(tau)/5
     
     gamma_k : float, optional
          k in Gamma(k, theta). Note mean = k*theta, var = k*theta^2.
