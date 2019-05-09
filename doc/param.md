@@ -220,8 +220,11 @@ Others
     
 
 
-Unknown (in the default list while not in trainer.py)
+Unknown 
 -------
+parameters that are in the default list while not in trainer.py;
+there is not parameter in trainer list that are not present in the default list
+
     rectify_inputs :
          True
                     
