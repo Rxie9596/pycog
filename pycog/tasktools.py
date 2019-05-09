@@ -191,12 +191,14 @@ def perfomance_f2r(trials, z):
     for i, end in enumerate(for_ends):
         if for_ends[i]:
             prebound = max(for_ends[i] - 5 , 0)
-            for_dif.append(np.mean(z[prebound:for_ends[i]+1, i, 0]))
+            for_dif.append(np.mean(z[prebound:for_ends[i]+1, i, 0])
+                           - np.mean(z[prebound:for_ends[i]+1, i, 1]))
 
     rev_dif = []
     for i, end in enumerate(rev_starts):
         if rev_starts[i]:
-            rev_dif.append(np.mean(z[rev_starts[i]:rev_starts[i] + 5, i, 1]))
+            rev_dif.append(np.mean(z[rev_starts[i]:rev_starts[i] + 5, i, 0])
+                           - np.mean(z[rev_starts[i]:rev_starts[i] + 5, i, 1]))
 
 
     for_dif = np.array(for_dif)
