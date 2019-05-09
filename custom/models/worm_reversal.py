@@ -70,9 +70,9 @@ def generate_trial(rng, dt, params):
                                                    xmin=t_reversal_min, xmax=t_reversal_max)
         T = forward + stimulus + reversal
 
-        epochs = {'fixation': (0, forward),
+        epochs = {'forward': (0, forward),
                   'stimulus': (forward, forward + stimulus),
-                  'decision': (forward + stimulus, T),
+                  'reversal': (forward + stimulus, T),
                   'T': T}
 
     # -------------------------------------------------------------------------------------
