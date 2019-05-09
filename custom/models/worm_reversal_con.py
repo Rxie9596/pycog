@@ -8,9 +8,54 @@ from pycog import tasktools
 from pycog.connectivity import Connectivity
 
 #-----------------------------------------------------------------------------------------
-# Read .csv file
+# Network structure
 #-----------------------------------------------------------------------------------------
-Crec_int = np.zeros((225,225))
+
+Nin  = 1
+N    = 225
+Nout = 2
+
+#-----------------------------------------------------------------------------------------
+#  Neuron indices:
+#-----------------------------------------------------------------------------------------#
+
+# Sensory:
+ALML = 6; ALMR = 7
+AVM = 25
+SENSORY = [ALML, ALMR, AVM]
+
+# Forward:
+AVBL = 79; AVBR = 80
+RIBL = 98; RIBR = 99
+AIYL = 73; AIYR = 74
+FORWARD = [AVBL, AVBR, RIBL, RIBR, AIYL, AIYR]
+
+# Reversal:
+AIBL = 69; AIBR = 70
+AVAL = 77; AVAR = 78
+RIML = 105; RIMR = 106
+REVERSAL = [AIBL, AIBR, AVAL, AVAR, RIML, RIMR]
+
+# Turn:
+SAADL = 51; SAADR = 52
+RIVL = 116; RIVR = 117
+SMDDL = 144; SMDDR = 145; SMDVL = 146; SMDVR = 147
+TURN = [SAADL, SAADR, RIVL,
+        RIVR, SMDDL, SMDDR,
+        SMDVL, SMDVR]
+
+#-----------------------------------------------------------------------------------------
+# Read .csv file
+#-----------------------------------------------------------------------------------------#
+# Read worm connectome from csv file and generate connectivity constrain.
+
+# input
+Cin_int  = np.zeros((N,Nin))
+Cin_fix  = np.zeros((N,Nin))
+Cin_fix[SENSORY,:] = 1
+
+# recurrent units
+Crec_int = np.zeros((N,N))
 
 csvfile = '/Users/yuxie/Lab/RNN/pycog/custom/tem_ad_connectivity.csv'
 with open(csvfile, 'rb') as file:
@@ -25,19 +70,18 @@ with open(csvfile, 'rb') as file:
 
 Crec_int[np.where(Crec_int>1)] = 1
 
+# output
+Cout_int = np.zeros((Nout,N))
+Cout_fix = np.zeros((Nout,N))
+Cout_fix[0,FORWARD]  = 1/len(FORWARD)   # forward output
+Cout_fix[1,REVERSAL] = 1/len(REVERSAL)  # reversal output
+
 #-----------------------------------------------------------------------------------------
-# Read .csv file
+# Connectivity object
 #-----------------------------------------------------------------------------------------
+Cin  = Connectivity(Cin_int, Cin_fix)
 Crec = Connectivity(Crec_int)
-
-
-#-----------------------------------------------------------------------------------------
-# Network structure
-#-----------------------------------------------------------------------------------------
-
-Nin  = 1
-N    = 225
-Nout = 2
+Cout = Connectivity(Cout_int, Cout_fix)
 
 # -----------------------------------------------------------------------------------------
 # Task structure
