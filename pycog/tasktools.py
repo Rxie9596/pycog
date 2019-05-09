@@ -170,6 +170,19 @@ def performance_2afc_min_condition(trials, z):
 # perfomance mesure forword to reversal
 # added by yu xie
 def perfomance_f2r(trials, z):
-    ends = [len(trial['t']) - 1 for trial in trials]
+    for_ends = [trial['e']['forward'][-1] for trial in trials]
+    rev_starts = [trial['e']['reversal'][0] for trial in trials]
 
-    return
+    for_dif = []
+    for i, end in enumerate(for_ends):
+        for_dif.append(np.mean(z[for_ends[i] - 5:for_ends[i], i, 0]))
+
+    rev_dif = []
+    for i, end in enumerate(rev_starts):
+        for_dif.append(np.mean(z[rev_starts[i]:rev_starts[i] + 5, i, 1]))
+
+    for_dif = np.array(for_dif)
+    rev_dif = np.array(rev_dif)
+    diff = for_dif - rev_dif
+
+    return 100*(np.mean(diff)/1.6)
