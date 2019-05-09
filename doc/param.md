@@ -230,11 +230,13 @@ Others
     checkfreq : int, optional
          Frequency with which to evaluate validation error.
          None
-    
+         in sgd.py if None, set to int(1e4)//gradient_data.minibatch_size
+         
     patience : int, optional
          Terminate training if the objective function doesn't change
          for longer than `patience`.
          None
+         in sgd.py if None, set to 100*checkfreq
     
 
 
@@ -245,6 +247,7 @@ there is not parameter in trainer list that are not present in the default list
 
     rectify_inputs :
          True
+         Used in dataset.py line 206
                     
     extra_info : 
          {}
