@@ -181,6 +181,8 @@ elif action == 'train':
 
     # Train
     model.train(savefile, seed=seed, compiledir=compiledir, gpus=gpus)
+# eg. savefile='/Users/yuxie/Lab/RNN/pycog/custom/work/data/
+#                worm_reversal/worm_reversal.pkl'
 
 #=========================================================================================
 # Test resting state

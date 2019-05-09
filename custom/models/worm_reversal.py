@@ -2,6 +2,8 @@ from __future__ import division
 
 import numpy as np
 
+from pycog import tasktools
+
 #-----------------------------------------------------------------------------------------
 # Network structure
 #-----------------------------------------------------------------------------------------
@@ -16,7 +18,7 @@ Nout = 2
 
 intensity_range  = [1]
 nconditions = len(intensity_range)
-pcatch = 1/(10 + 1)
+pcatch = 1/(5 + 1)
 
 SCALE = 6
 def scale(inten):
@@ -142,4 +144,4 @@ def terminate(performance_history):
     return np.mean(performance_history[-5:]) > TARGET_PERFORMANCE
 
 # Validation dataset
-n_validation = 100*(10 + 1)
+n_validation = 100*(5 + 1)
