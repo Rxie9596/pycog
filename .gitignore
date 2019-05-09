@@ -5,6 +5,7 @@
 *.pkl
 *.txt
 *.pdf
+*.csv
 *.egg-info/
 .vscode/
 .idea/
