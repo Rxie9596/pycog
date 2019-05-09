@@ -81,6 +81,9 @@ def generate_trial(rng, dt, params):
     t, e  = tasktools.get_epochs_idx(dt, epochs) # Time, task epochs in discrete time
     trial = {'t': t, 'epochs': epochs}           # Trial
 
+    # Save e info
+    trial['e'] = e
+
     if catch_trial:
         trial['info'] = {}
     else:
@@ -125,9 +128,6 @@ def generate_trial(rng, dt, params):
 
             # Only care about forward and reversal periods
             M[e['forward']+e['reversal'],:] = 1
-
-        # Save e info
-        trial['e'] = e
 
         # Outputs and mask
         trial['outputs'] = Y

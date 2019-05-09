@@ -193,7 +193,7 @@ def perfomance_f2r(trials, z):
     rev_dif = []
     for i, end in enumerate(rev_starts):
         if rev_starts[i]:
-            for_dif.append(np.mean(z[rev_starts[i]:rev_starts[i] + 5, i, 1]))
+            rev_dif.append(np.mean(z[rev_starts[i]:rev_starts[i] + 5, i, 1]))
 
 
     for_dif = np.array(for_dif)
