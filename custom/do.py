@@ -256,7 +256,10 @@ elif action == 'structure':
 
     # Create figure
     fig = rnn.plot_structure(sortby=sortby)
-    fig.save(path=figspath, name=name+'_'+action)
+    if 'init' in args:
+        fig.save(path=figspath, name=name + '_' + action + '_init')
+    else:
+        fig.save(path=figspath, name=name + '_' + action)
     fig.close()
 
 #=========================================================================================

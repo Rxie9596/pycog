@@ -36,7 +36,7 @@ def generate_trial(rng, dt, params):
         if b == 0:
             catch_trial = True
         else:
-            intensity = params.get('intensity', rng.choice(intensity_range))
+            intensity = intensity_range[0]
     else:
         raise ValueError("Unknown trial type.")
 
