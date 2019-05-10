@@ -12,6 +12,7 @@ Input
     Nin : int, optional
           Number of input units.
           0
+          in rnn.ou_defaults 0
     
     Cin : numpy.ndarray or Connectivity, optional
          Input weight structure.
@@ -20,10 +21,12 @@ Input
     baseline_in : float, optional
          Baseline input rate.
          0.2
+         in rnn.ou_defaults 0
          
     var_in : float or numpy.ndarray, optional
          Variance(s) for inputs.
          0.01**2
+         in rnn.ou_defaults 0.01**2
     
     distribution_in : str, optional
          Distribution for the initial input weight matrix.
@@ -39,6 +42,7 @@ Recurrent
     N : int, optional
          Number of recurrent units.
          100
+         in rnn.ou_defaults 100
          
     Crec : numpy.ndarray or Connectivity, optional
          Recurrent weight structure.
@@ -67,18 +71,25 @@ Recurrent
     tau : float or numpy.ndarray, optional
          Time constant(s) for recurrent units.
          100
+         in rnn.ou_defaults 100
     
     
     hidden_activation : str, optional
          Hidden activation function.
          'rectify'
+         in rnn.ou_defaults
+         'linear'
+         in theanotools.py
          {'linear', 'rectify', 'rectify_power', 'sigmoid', 'tanh', 'rtanh', 'softplus'}
-    
+         in rnn.py 
+         {'linear', 'rectify', 'rectify_power', 'sigmoid', 'tanh', 'rtanh', 'softmax'}
+         
     var_rec : float or numpy.ndarray, optional
          If `float` or 1D `numpy.ndarray`, then recurrent units receive
          independent noise. If 2D `numpy.ndarray`, then noise is drawn
          from a multivariable normal distribution.
          0.15**2
+         in rnn.ou_defaults 0.15**2
          
     rho0 : float, optional
          Spectral radius for the initial recurrent weight matrix.
@@ -97,6 +108,7 @@ Output
     Nout : int, optional
          Number of output units.
          1
+         in rnn.ou_defaults 0
          
     Cout : numpy.ndarray or Connectivity, optional
          Output weight structure.
@@ -113,7 +125,12 @@ Output
     output_activation: str, optional
          Output activation function.
          'linear'
-         {'linear', 'rectify', 'rectify_power', 'sigmoid', 'tanh', 'rtanh', 'softplus'}
+         in rnn.ou_defaults
+         'linear'
+         in theanotools.py
+         {'linear', 'rectify', 'rectify_power', 'sigmoid', 'softmax'}
+         in rnn.py
+         {'linear', 'rectify', 'rectify_power', 'sigmoid', 'tanh', 'rtanh', 'softmax'}
     
     distribution_out : str, optional
          Distribution for the initial output weight matrix.
@@ -128,6 +145,7 @@ Others
     mode : str, optional
          `continuous` or `batch` training/running mode.
          'batch'
+         in rnn.ou_defaults 'batch'
          
     n_gradient : int, optional
           Minibatch size for gradient dataset.
@@ -221,7 +239,9 @@ Others
     dt : float, optional
          Integration time step.
          None
-         in trainer: if None set to min(tau)/5
+         in trainer: if None set to min(tau)/5 (tau defaults to 100)
+         in rnn.ou_defaults 0.5
+         in do.py defaults to 0.5
     
     gamma_k : float, optional
          k in Gamma(k, theta). Note mean = k*theta, var = k*theta^2.
@@ -248,6 +268,7 @@ there is not parameter in trainer list that are not present in the default list
     rectify_inputs :
          True
          Used in dataset.py line 206
+         in rnn.ou_defaults False
                     
     extra_info : 
          {}
@@ -261,9 +282,12 @@ there is not parameter in trainer list that are not present in the default list
     method :
          'sgd'  # Not used currently
          
+         
+### rnn.py need to specify only when using rnn.py
 
-
-
+    'threshold': 1e-4,
+    
+    'sigma0':    0
 
 
 ### Original parameters list in trainer.py
@@ -485,4 +509,28 @@ there is not parameter in trainer list that are not present in the default list
     'patience':              None,
     'momentum':              False, # Not used currently
     'method':                'sgd'  # Not used currently
+```
+
+### Original parameters default value in RNN.py
+```
+
+    defaults = {
+        'threshold': 1e-4,
+        'sigma0':    0
+        }
+    
+    ou_defaults = {
+        'N':                 100,
+        'Nin':               0,
+        'Nout':              0,
+        'hidden_activation': 'linear',
+        'output_activation': 'linear',
+        'baseline_in':       0,
+        'rectify_inputs':    False,
+        'var_in':            0.01**2,
+        'var_rec':           0.15**2,
+        'dt':                0.5,
+        'tau':               100,
+        'mode':              'batch'
+        }
 ```
