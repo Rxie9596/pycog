@@ -187,6 +187,7 @@ elif action == 'train':
 #=========================================================================================
 # Test resting state
 #=========================================================================================
+# TODO resting state plot lower bound is not correct
 
 elif action == 'restingstate':
     import numpy as np
@@ -224,7 +225,10 @@ elif action == 'restingstate':
     plot.xlabel('Time (sec)')
     plot.ylabel('Outputs')
 
-    fig.save(path=figspath, name=name+'_'+action)
+    if 'init' in args:
+        fig.save(path=figspath, name=name + '_' + action + '_init')
+    else:
+        fig.save(path=figspath, name=name+'_'+action)
     fig.close()
 
 #=========================================================================================
