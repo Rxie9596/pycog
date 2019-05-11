@@ -235,6 +235,7 @@ elif action == 'restingstate':
 # Plot network structure
 #=========================================================================================
 
+# TODO add sortby method to figure name
 elif action == 'structure':
     from pycog import RNN
 
