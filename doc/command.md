@@ -1,35 +1,48 @@
-
 ### Actions to perform
 
-```bash
+command line parameters
+```python
+p.add_argument('model_file', help="model specification")
+p.add_argument('action', nargs='?', default='check')
+p.add_argument('args', nargs='*')
+p.add_argument('-s', '--seed', type=int, default=100)
+p.add_argument('--suffix', type=str, default='')
+p.add_argument('-p', '--ppn', type=int, default=1)
+p.add_argument('-g', '--gpus', nargs='?', type=int, const=1, default=0)
+p.add_argument('--dt', type=float, default=0.5)
+p.add_argument('--dt_save', type=float, default=0.5)
 
 ```
+* clean up files and documents
+```bash
+python do.py models/task_name clean
+```
+
 * traning network
 ```bash
 python do.py models/task_name train
+python do.py models/task_name train -s 1001 -g0
 ```
+
 * plot cost history
 ```bash
 python do.py models/task_name costs
 ```
+
 * plot performance (if performance is defined)
-
-plot performance without target
 ```bash
-python do.py models/worm_reversal_con performance
-```
-
-plot performance with target
-```bash
-python do.py models/worm_reversal_con performance 85
+python do.py models/worm_reversal_con performance    # without target
+python do.py models/worm_reversal_con performance 85 # with target
 ```
 
 * plot network structure
 ```bash
-python do.py models/task_name structure init            # plot initial structure
-python do.py models/task_name structure                 # plot structure after training
-python do.py models/task_name structure selectivity     # sort by selectivity or other criteria
+python do.py models/task_name structure init                # plot initial structure
+python do.py models/task_name structure                     # plot structure after training
+python do.py models/task_name structure selectivity         # sort by selectivity or other criteriapython do.py models/task_name structure selectivity     # sort by selectivity or other criteria
+python do.py models/task_name structure selectivity init    # sort by selectivity or other criteria
 ```
+
 * plot network output when there is no input (restingstate)
 ```bash
 python do.py models/task_name restingstate init    # plot initial restingstate response
@@ -40,25 +53,28 @@ python do.py models/task_name restingstate         # plot restingstate response 
 ```bash
 python do.py models/task_name check
 ```
-* clean up files and documents
-```bash
-python do.py models/task_name clean
-```
+
 * submit jobs when using on the cluster
 ```bash
 python do.py models/task_name submit
 ```
 
-* run analysis
+* run analysis examples
 ```bash
-python do.py model_script run ana_script trials 4000 --dt_save 20
-
+python do.py rdm_model run rdm_script trials 4000 --dt_save 20
+python do.py rdm_model run rdm_script psychometric             # var stimulus
+python do.py rdm_model run rdm_script psychometric threshold   # response time version
+python do.py rdm_model run rdm_script sort_stim_onset
+python do.py rdm_model run rdm_script units_stim_onset
+python do.py rdm_model run rdm_script sort_response
+python do.py rdm_model run rdm_script units_response
+python do.py rdm_model run rdm_script selectivity
 ```
 
 
 
 ## All used commands in paper/all.py
-```
+```bash
 python all.py -s
 => Perceptual decision-making task
    python /Users/yuxie/Lab/RNN/pycog/examples/do.py /Users/yuxie/Lab/RNN/pycog/examples/models/rdm_varstim clean
