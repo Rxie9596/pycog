@@ -278,6 +278,30 @@ elif action == 'costs':
     fig.close()
 
 #=========================================================================================
+# Plot Performance history
+#=========================================================================================
+
+elif action == 'performance':
+    from pycog import RNN
+
+    # if target is provided, also plot target
+    if len(args) > 0:
+        target = float(args[0])
+
+    # Create RNN
+    rnn = RNN(savefile, verbose=True)
+
+    # Create figure
+    if len(args) > 0:
+        fig = rnn.plot_performance(target)
+        fig.save(path=figspath, name=name + '_' + action + '_target')
+    else:
+        fig = rnn.plot_performance()
+        fig.save(path=figspath, name=name + '_' + action)
+
+    fig.close()
+
+#=========================================================================================
 # Run analysis
 #=========================================================================================
 

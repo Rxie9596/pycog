@@ -479,6 +479,62 @@ class RNN(object):
 
     #/////////////////////////////////////////////////////////////////////////////////////
 
+    # added by yu xie, May 11, 2019
+    # if there is performance, plot performance; else, plot the last cost
+    def plot_performance(self, target = None):
+        """
+        Plot the evolution of the cost functions.
+
+        """
+        try:
+            from .figtools import Figure
+        except ImportError:
+            print("[ {}.RNN.plot_costs ] Couldn't import pycog.figtools.".format(THIS))
+            return None
+
+        fig = Figure(w=4, h=3, axislabelsize=7.5, labelpadx=5, labelpady=7.5,
+                     thickness=0.6, ticksize=3, ticklabelsize=6.5, ticklabelpad=2)
+
+        w = 0.8
+        h = 0.76
+        plot = fig.add([0.1,  0.17, w, h])
+
+        #---------------------------------------------------------------------------------
+        # Performance
+        #---------------------------------------------------------------------------------
+
+        all = []
+
+        # Performance
+        ntrials = [int(costs[0]) for costs in self.costs_history]
+        ntrials = np.asarray(ntrials, dtype=int)//int(ntrials[1]-ntrials[0])
+        cost    = [costs[1][-1] for costs in self.costs_history]
+        plot.plot(ntrials, cost, color='0.2', lw=1, label='Perfromance')
+        all.append(cost)
+
+        # Target performance
+        if target is not None:
+            target = np.dot(target, np.ones_like(ntrials))
+            plot.plot(ntrials, target, color=Figure.colors('red'),
+                      lw=1, ls='dotted', label='Target')
+            all.append(target)
+
+        plot.xlim(0, ntrials[-1])
+        plot.lim('y', all, lower=0)
+
+        plot.xlabel(r'Number of trials ($\times 10^4$)')
+        plot.ylabel('Performance (Percentage)')
+
+        # Legend
+        props = {'prop': {'size': 7}}
+        plot.legend(bbox_to_anchor=(1, 0.2), **props)
+
+        #---------------------------------------------------------------------------------
+
+        return fig
+
+    #/////////////////////////////////////////////////////////////////////////////////////
+
     @staticmethod
     def plot_connection_matrix(plot, W, smap_exc=None, smap_inh=None, labelsize=5):
         """
