@@ -176,7 +176,16 @@ python do.py models/task_name clean
 ```
 python do.py models/task_name submit
 ```
+9. plot performance (if performance is defined)
+plot performance without target
+```
+python do.py models/worm_reversal_con performance
+```
 
+plot performance with target
+```
+python do.py models/worm_reversal_con performance 85
+```
 
 ## All used commands
 ```
