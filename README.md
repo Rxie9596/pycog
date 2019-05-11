@@ -87,8 +87,8 @@ This code is the product of work carried out in the group of [Xiao-Jing Wang at 
 
 ## Added by Yu Xie
 
-* (example commands)[https://github.com/Rxie9596/pycog/blob/master/doc/command.md]
-* (parameter list)[https://github.com/Rxie9596/pycog/blob/master/doc/param.md]
+* [example commands](https://github.com/Rxie9596/pycog/blob/master/doc/command.md)
+* [parameter list](https://github.com/Rxie9596/pycog/blob/master/doc/param.md)
 
 Installing environment (on MacOS): do not build the .c file
 ```
