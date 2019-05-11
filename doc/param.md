@@ -283,11 +283,14 @@ there is not parameter in trainer list that are not present in the default list
          'sgd'  # Not used currently
          
          
-### rnn.py need to specify only when using rnn.py
+### rnn.py specify only when using rnn.py
 
     'threshold': 1e-4,
+        clip_weights threshold
     
     'sigma0':    0
+        noise to initial recurrent units values
+            
 
 
 ### Original parameters list in trainer.py
