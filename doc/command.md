@@ -59,6 +59,14 @@ python do.py models/task_name check
 python do.py models/task_name submit
 ```
 
+* run analysis on worm reversal task
+stimulus intensity: 1 
+initial network: init
+random number seed: 99
+```bash
+python do.py models/worm_reversal_con run analysis/ana_reversal activatestate 1 init -s 99
+```
+
 * run analysis examples
 ```bash
 python do.py rdm_model run rdm_script trials 4000 -dt 0.5 --dt_save 20  # run rnn with 4000 trials for each condition
