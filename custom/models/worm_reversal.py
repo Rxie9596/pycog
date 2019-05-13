@@ -60,7 +60,7 @@ def generate_trial(rng, dt, params):
     else:
         if params['name'] == 'test':
             forward = tasktools.truncated_exponential(rng, dt, t_foward_avg,
-                                                      xmin=t_foward_min, xmax=t_foward_min)
+                                                      xmin=t_foward_min, xmax=t_foward_max)
         else:
             forward = tasktools.truncated_exponential(rng, dt, t_foward_avg,
                                                       xmin=t_foward_min, xmax=t_foward_max)
