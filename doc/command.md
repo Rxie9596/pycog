@@ -61,10 +61,11 @@ python do.py models/task_name submit
 
 * run analysis on worm reversal task
 stimulus intensity: 1 
+plot unit: 0
 initial network: init
 random number seed: 99
 ```bash
-python do.py models/worm_reversal_con run analysis/ana_reversal activatestate 1 init -s 99
+python do.py models/worm_reversal_con run analysis/ana_reversal activatestate 1 0 init -s 99
 ```
 
 * run analysis examples
