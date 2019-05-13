@@ -61,13 +61,13 @@ python do.py models/task_name submit
 
 * run analysis examples
 ```bash
-python do.py rdm_model run rdm_script trials 4000 --dt_save 20
-python do.py rdm_model run rdm_script psychometric             # var stimulus
-python do.py rdm_model run rdm_script psychometric threshold   # response time version
-python do.py rdm_model run rdm_script sort_stim_onset
-python do.py rdm_model run rdm_script units_stim_onset
-python do.py rdm_model run rdm_script sort_response
-python do.py rdm_model run rdm_script units_response
+python do.py rdm_model run rdm_script trials 4000 -dt 0.5 --dt_save 20  # run rnn with 4000 trials for each condition
+python do.py rdm_model run rdm_script psychometric               # var stimulus
+python do.py rdm_model run rdm_script psychometric threshold     # response time version
+python do.py rdm_model run rdm_script sort_stim_onset   # sort trials based on stimulus and save sorted file
+python do.py rdm_model run rdm_script units_stim_onset  # plot each unit's activity
+python do.py rdm_model run rdm_script sort_response     # sort trials based on respond time and save sorted file
+python do.py rdm_model run rdm_script units_response    # plot each unit's activity
 python do.py rdm_model run rdm_script selectivity
 ```
 
