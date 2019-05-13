@@ -74,11 +74,13 @@ def do(action, args, p):
     if action == 'trials':
         run_trials(p, args)
 
-    #-------------------------------------------------------------------------------------
 
     # =========================================================================================
-    # Active state example
+    # Active state
     # =========================================================================================
+
+    # TODO plot multiple units in the same figure
+    # TODO replace units name with real neurons
 
     elif action == 'activatestate':
         import numpy as np
@@ -94,6 +96,12 @@ def do(action, args, p):
             intensity = float(args[0])
         except:
             intensity = 1
+
+        # Plot unit
+        try:
+            unit = int(args[1])
+        except:
+            unit = None
 
         # Create RNN
         if 'init' in args:
@@ -161,10 +169,15 @@ def do(action, args, p):
 
         # Outputs
         colors = [Figure.colors('orange'), Figure.colors('blue')]
-        plot.plot(1e-3 * rnn.t, rnn.z[0], color=colors[0], label='Forward module')
-        plot.plot(1e-3 * rnn.t, rnn.z[1], color=colors[1], label='Reversal module')
+        if unit is None:
+            plot.plot(1e-3 * rnn.t, rnn.z[0], color=colors[0], label='Forward module')
+            plot.plot(1e-3 * rnn.t, rnn.z[1], color=colors[1], label='Reversal module')
+            plot.lim('y', np.ravel(rnn.z), lower=0)
+        else:
+            plot.plot(1e-3 * rnn.t, rnn.r[unit], color=colors[1], label='unit '+str(unit))
+            plot.lim('y', np.ravel(rnn.r[unit]))
+
         plot.xlim(1e-3 * rnn.t[0], 1e-3 * rnn.t[-1])
-        plot.lim('y', np.ravel(rnn.z), lower=0)
 
         # Legend
         props = {'prop': {'size': 7}}
@@ -183,9 +196,14 @@ def do(action, args, p):
                   ha='center', va='center', fontsize=7)
 
         if 'init' in args:
-            fig.save(path=p['figspath'], name=p['name'] + '_' + action + '_init')
+            savename = p['name'] + '_' + action + '_init'
         else:
-            fig.save(path=p['figspath'], name=p['name'] + '_' + action)
+            savename = p['name'] + '_' + action
+
+        if unit is not None:
+            savename += '_unit_' + str(unit)
+
+        fig.save(path=p['figspath'], name=savename)
         fig.close()
 
     else:
