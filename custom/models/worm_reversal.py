@@ -17,8 +17,8 @@ Nout = 2
 # -----------------------------------------------------------------------------------------
 
 intensity_range  = [1]
-nconditions      = 5*len(intensity_range)
-pcatch           = 1/(nconditions + 1)
+nconditions      = len(intensity_range)
+pcatch           = 1/(5*nconditions + 1)
 
 def generate_trial(rng, dt, params):
     # -------------------------------------------------------------------------------------
