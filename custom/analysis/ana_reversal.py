@@ -31,6 +31,25 @@ def load_trials(trialsfile):
 
     return trials, len(trials)
 
+# File to store sorted trials in
+def get_sortedfile_stim_onset(p):
+    return join(p['trialspath'], p['name'] + '_sorted_stim_onset.pkl')
+
+def safe_divide(x):
+    if x == 0:
+        return 0
+    return 1/x
+
+# Define "active" units
+def is_active(r):
+    return np.std(r) > 0.1
+
+# Nice colors to represent coherences, from http://colorbrewer2.org/
+colors = {
+        1: '#4292c6'
+        }
+
+
 #=========================================================================================
 
 def run_trials(p, args):
@@ -47,15 +66,200 @@ def run_trials(p, args):
     except:
         ntrials = 100
 
-    # TODO use different ncondition
-    ntrials *= m.nconditions + 1
+    ntrials *= m.nconditions
 
     # RNN
     rng = np.random.RandomState(p['seed'])
     rnn = RNN(p['savefile'], {'dt': p['dt']}, verbose=False)
 
+    # Trials
+    w = len(str(ntrials))
+    trials = []
+    backspaces = 0
+    try:
+        for i in xrange(ntrials):
+            b = i % m.nconditions
+            # All conditions
+            intensity = m.intensity_range[b]
 
+            # Trial
+            trial_func = m.generate_trial
+            trial_args = {
+                'name': 'test',
+                'catch': False,
+                'intensity': intensity,
+            }
+            info = rnn.run(inputs=(trial_func, trial_args), rng=rng)
 
+            # Display trial type
+            s = ("Trial {:>{}}/{}: intentsity: {:>+3}"
+                 .format(i + 1 , w, ntrials, info['intensity']))
+            sys.stdout.write(backspaces * '\b' + s)
+            sys.stdout.flush()
+            backspaces = len(s)
+
+            # Save
+            dt = rnn.t[1] - rnn.t[0]
+            step = int(p['dt_save'] / dt)
+            trial = {
+                't': rnn.t[::step],
+                'u': rnn.u[:, ::step],
+                'r': rnn.r[:, ::step],
+                'z': rnn.z[:, ::step],
+                'info': info
+            }
+            trials.append(trial)
+    except KeyboardInterrupt:
+        pass
+    print("")
+
+    # Save all
+    filename = get_trialsfile(p)
+    with open(filename, 'wb') as f:
+        pickle.dump(trials, f, pickle.HIGHEST_PROTOCOL)
+    size = os.path.getsize(filename) * 1e-9
+    print("[ {}.run_trials ] Trials saved to {} ({:.1f} GB)".format(THIS, filename, size))
+
+#=========================================================================================
+
+def sort_trials_stim_onset(trialsfile, sortedfile):
+
+    # Load trials
+    trials, ntrials = load_trials(trialsfile)
+
+    # Get unique conditions
+    conds = []
+    for trial in trials:
+        info = trial['info']
+        conds.append(info['intensity'])
+    conds = list(set(conds))
+
+    #-------------------------------------------------------------------------------------
+    # Prepare for averaging
+    #-------------------------------------------------------------------------------------
+
+    # Number of units
+    nunits = trials[0]['r'].shape[0]
+
+    # assume all trials has the same stimlus length
+    # # stimulus time
+
+    # Number of time points
+    idx1   = np.where(trials[0]['t'] <= trials[0]['info']['epochs']['stimulus'][0])[0][-1] + 1
+    idx2   = np.where(trials[0]['t'] <= trials[0]['info']['epochs']['stimulus'][1])[0][-1]
+    sti_t  = trials[0]['t'][idx1:idx2+1]
+    sti_t  = sti_t - sti_t[0]
+    dt     = sti_t[1] - sti_t[0]
+
+    forward  = [np.ptp(trial['info']['epochs']['forward']) for trial in trials]
+    idx      = np.argmax(forward)
+    trial    = trials[idx]
+    t        = trial['t']
+    w        = np.where(t <= trial['info']['epochs']['forward'][1])[0][-1]
+    for_t    = trial['t'][:w+1]
+    for_t    = for_t - for_t[-1] - dt + + sti_t[0]
+
+    reversal = [np.ptp(trial['info']['epochs']['reversal']) for trial in trials]
+    idx      = np.argmax(reversal)
+    trial    = trials[idx]
+    t        = trial['t']
+    w1       = np.where(t <= trial['info']['epochs']['reversal'][0])[0][-1] + 1
+    w2       = np.where(t <= trial['info']['epochs']['reversal'][1])[0][-1]
+    rev_t    = trial['t'][w1:w2+1]
+    rev_t    = rev_t - rev_t[0] + dt + sti_t[-1]
+
+    t         = np.concatenate((for_t,sti_t,rev_t))
+    for_ntime = len(for_t)
+    sti_ntime = len(sti_t)
+    rev_ntime = len(rev_t)
+    ntime     = for_ntime + sti_ntime + rev_ntime
+
+    #-------------------------------------------------------------------------------------
+    # Average across conditions
+    #-------------------------------------------------------------------------------------
+
+    sorted_trials_for   = {c: np.zeros((nunits, for_ntime)) for c in conds}
+    ntrials_by_cond_for = {c: np.zeros(for_ntime) for c in conds}
+
+    sorted_trials_sti   = {c: np.zeros((nunits, sti_ntime)) for c in conds}
+    ntrials_by_cond_sti = {c: np.zeros(sti_ntime) for c in conds}
+
+    sorted_trials_rev   = {c: np.zeros((nunits, rev_ntime)) for c in conds}
+    ntrials_by_cond_rev = {c: np.zeros(rev_ntime) for c in conds}
+
+    sorted_trials   = {c: np.zeros((nunits, ntime)) for c in conds}
+    ntrials_by_cond = {c: np.zeros(ntime) for c in conds}
+    for trial in trials:
+        info  = trial['info']
+        c = info['intensity']
+
+        t_i = trial['t']
+
+        w_i = np.where(t_i <= trial['info']['epochs']['forward'][1])[0][-1]
+        sorted_trials_for[c][:,-(w_i+1):] += trial['r'][:,:w_i+1]
+        ntrials_by_cond_for[c][-(w_i+1):] += 1
+
+        w1_i = np.where(t_i <= trial['info']['epochs']['stimulus'][0])[0][-1] + 1
+        w2_i = np.where(t_i <= trial['info']['epochs']['stimulus'][1])[0][-1]
+        sorted_trials_sti[c]   += trial['r'][:,w1_i:w2_i+1]
+        ntrials_by_cond_sti[c] += 1
+
+        w1_i = np.where(t_i <= trial['info']['epochs']['reversal'][0])[0][-1] + 1
+        w2_i = np.where(t_i <= trial['info']['epochs']['reversal'][1])[0][-1]
+        sorted_trials_rev[c][:,:(w2_i-w1_i+1)] += trial['r'][:,w1_i:w2_i+1]
+        ntrials_by_cond_rev[c][:(w2_i-w1_i+1)] += 1
+
+    for c in conds:
+        sorted_trials_for[c] *= np.array([safe_divide(x) for x in ntrials_by_cond_for[c]])
+        sorted_trials_sti[c] *= np.array([safe_divide(x) for x in ntrials_by_cond_sti[c]])
+        sorted_trials_rev[c] *= np.array([safe_divide(x) for x in ntrials_by_cond_rev[c]])
+
+        sorted_trials[c] = np.concatenate(
+            (sorted_trials_for[c],sorted_trials_sti[c],sorted_trials_rev[c]), axis=1)
+
+    # Save
+    with open(sortedfile, 'wb') as f:
+        pickle.dump((t, sorted_trials), f, pickle.HIGHEST_PROTOCOL)
+        print(("[ {}.sort_trials_stim_onset ]"
+               " Trials sorted and aligned to stimulus onset, saved to {}")
+              .format(THIS, sortedfile))
+
+#=========================================================================================
+
+def plot_unit(unit, sortedfile, plot, t0=0, tmin=None, tmax=None, **kwargs):
+    if tmin == None:
+        tmin = -np.inf
+    if tmax == None:
+        tmax = np.inf
+
+    # Load sorted trials
+    with open(sortedfile) as f:
+        t, sorted_trials = pickle.load(f)
+
+    # Time
+    w, = np.where((tmin <= t) & (t <= tmax))
+    t  = t[w] - t0
+
+    conds = sorted_trials.keys()
+
+    all = []
+    for c in sorted(conds, key=lambda c: c):
+        intenstiy = c
+
+        prop = {'color': colors[intenstiy],
+                'lw':    kwargs.get('lw', 1.5)}
+
+        prop['label'] = '{:.1f}'.format(intenstiy)
+
+        r = sorted_trials[c][unit][w]
+        plot.plot(t, r, **prop)
+        all.append(r)
+
+    plot.xlim(t[0], t[-1])
+    plot.xticks([t[0], 0, t[-1]])
+    plot.lim('y', all, lower=0)
+
+    return np.concatenate(all)
 
 #=========================================================================================
 
@@ -74,19 +278,22 @@ def do(action, args, p):
     if action == 'trials':
         run_trials(p, args)
 
+    #-------------------------------------------------------------------------------------
+    # Sort
+    #-------------------------------------------------------------------------------------
 
-    # =========================================================================================
-    # Active state
-    # =========================================================================================
+    elif action == 'sort_stim_onset':
+
+        sort_trials(get_trialsfile(p), get_sortedfile_stim_onset(p))
+
+    #-------------------------------------------------------------------------------------
+    # activate state
+    #-------------------------------------------------------------------------------------
 
     # TODO plot multiple units in the same figure
     # TODO replace units name with real neurons
 
     elif action == 'activatestate':
-        import numpy as np
-
-        from pycog import RNN
-        from pycog.figtools import Figure
 
         # Model
         m = p['model']
@@ -205,6 +412,90 @@ def do(action, args, p):
 
         fig.save(path=p['figspath'], name=savename)
         fig.close()
+
+    # -------------------------------------------------------------------------------------
+    # Plot single-unit activity aligned to stimulus onset
+    # -------------------------------------------------------------------------------------
+
+    elif action == 'units_stim_onset':
+        from glob import glob
+
+        try:
+            lower_bon = float(args[0])
+        except:
+            lower_bon = None
+
+        try:
+            higher_bon = float(args[1])
+        except:
+            higher_bon = None
+
+        # Remove existing files
+        unitpath = join(p['figspath'], 'units')
+        filenames = glob(join(unitpath, p['name'] + '_stim_onset_unit*'))
+        for filename in filenames:
+            os.remove(filename)
+            print("Removed {}".format(filename))
+
+        # Load sorted trials
+        sortedfile = get_sortedfile_stim_onset(p)
+        with open(sortedfile) as f:
+            t, sorted_trials = pickle.load(f)
+
+        rnn = RNN(p['savefile'], {'dt': p['dt']}, verbose=True)
+        trial_func = p['model'].generate_trial
+        trial_args = {
+            'name': 'test',
+            'catch': False,
+        }
+        info = rnn.run(inputs=(trial_func, trial_args), seed=p['seed'])
+
+        t_stimulus = np.array(info['epochs']['stimulus']);
+        stimulus_d = t_stimulus[1]-t_stimulus[0]
+
+        for i in xrange(p['model'].N):
+            # Check if the unit does anything
+            # active = False
+            # for r in sorted_trials.values():
+            #     if is_active(r[i]):
+            #         active = True
+            #         break
+            # if not active:
+            #     continue
+
+            dashes = [3.5, 1.5]
+
+            fig = Figure()
+            plot = fig.add()
+
+            # -----------------------------------------------------------------------------
+            # Plot
+            # -----------------------------------------------------------------------------
+
+            plot_unit(i, sortedfile, plot, tmin=lower_bon, tmax=higher_bon)
+
+            plot.xlabel('Time (ms)')
+            plot.ylabel('Firing rate (a.u.)')
+
+            props = {'prop': {'size': 8}, 'handletextpad': 1.02, 'labelspacing': 0.6}
+            plot.legend(bbox_to_anchor=(0.18, 1), **props)
+
+            plot.vline(0, color='0.2', linestyle='--', lw=1, dashes=dashes)
+            plot.vline(stimulus_d, color='0.2', linestyle='--', lw=1, dashes=dashes)
+
+            # Epochs
+            plot.text(-np.mean((0,stimulus_d)), plot.get_ylim()[1], 'forward',
+                      ha='center', va='center', fontsize=7)
+            plot.text(np.mean((0,stimulus_d)), plot.get_ylim()[1], 'stimulus',
+                      ha='center', va='center', fontsize=7)
+            plot.text(3*np.mean((0,stimulus_d)), plot.get_ylim()[1], 'reversal',
+                      ha='center', va='center', fontsize=7)
+
+            # -----------------------------------------------------------------------------
+
+            fig.save(path=unitpath,
+                     name=p['name'] + '_stim_onset_unit{:03d}'.format(i))
+            fig.close()
 
     else:
         print("[ {}.do ] Unrecognized action.".format(THIS))
