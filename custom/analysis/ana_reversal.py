@@ -35,6 +35,14 @@ def load_trials(trialsfile):
 def get_sortedfile_stim_onset(p):
     return join(p['trialspath'], p['name'] + '_sorted_stim_onset.pkl')
 
+# File to store d'
+def get_dprimefile(p):
+    return join(p['datapath'], p['name'] + '_dprime.txt')
+
+# File to store selectivity
+def get_selectivityfile(p):
+    return join(p['datapath'], p['name'] + '_selectivity.txt')
+
 def safe_divide(x):
     if x == 0:
         return 0
@@ -260,6 +268,81 @@ def plot_unit(unit, sortedfile, plot, t0=0, tmin=None, tmax=None, **kwargs):
     plot.lim('y', all, lower=0)
 
     return np.concatenate(all)
+
+#=========================================================================================
+# TODO there might be a better way to calculate dprime in this case
+
+def get_choice_selectivity(trialsfile, lower_bon=None, higher_bon=None):
+    """
+    Compute d' for choice.
+
+    """
+
+    if lower_bon == None:
+        lower_bon = 150.2
+    if higher_bon == None:
+        higher_bon = 150.2
+
+    # Load trials
+    trials, ntrials = load_trials(trialsfile)
+
+    N = trials[0]['r'].shape[0]
+    Xfor  = np.zeros(N)
+    Xfor2 = np.zeros(N)
+    Xrev  = np.zeros(N)
+    Xrev2 = np.zeros(N)
+    n_for = 0
+    n_rev = 0
+
+    # method 1 & 2
+    # r_for = np.zeros(N)
+    # r_rev = np.zeros(N)
+    for trial in trials:
+        t = trial['t']
+        start, end = trial['info']['epochs']['stimulus']
+        forward,  = np.where((start - lower_bon < t) & (t <= start))
+        reversal, = np.where((end < t) & (t <= end + higher_bon))
+
+        r_for = np.sum(trial['r'][:,forward], axis=1)
+        r_rev = np.sum(trial['r'][:,reversal], axis=1)
+
+        Xfor  += r_for
+        Xfor2 += r_for**2
+        n_for += 1
+
+        Xrev  += r_rev
+        Xrev2 += r_rev**2
+        n_rev += 1
+
+        # method 1
+        # r_for_m = np.mean(trial['r'][:, forward], axis=1)
+        # r_for += r_for_m
+        #
+        # r_rev_m = np.mean(trial['r'][:, reversal], axis=1)
+        # r_rev += r_rev_m
+
+        # method 2
+        # r_for_m = np.mean(trial['r'][:,forward], axis=1)
+        # r_for_s = np.std(trial['r'][:,forward], axis=1)
+        # r_for  += r_for_m/r_for_s
+        #
+        # r_rev_m = np.mean(trial['r'][:,reversal], axis=1)
+        # r_rev_s = np.std(trial['r'][:,reversal], axis=1)
+        # r_rev  += r_rev_m/r_rev_s
+
+    mean_for  = Xfor/n_for
+    var_for   = Xfor2/n_for - mean_for**2
+    mean_rev = Xrev/n_rev
+    var_rev  = Xrev2/n_rev - mean_rev**2
+
+    # method 1 & 2
+    # r_for = r_for / len(trials)
+    # r_rev = r_rev / len(trials)
+
+    dprime = (mean_for - mean_rev) / np.sqrt((var_for + var_rev) / 2)
+    # dprime = r_for - r_rev
+
+    return dprime
 
 #=========================================================================================
 
@@ -496,6 +579,68 @@ def do(action, args, p):
             fig.save(path=unitpath,
                      name=p['name'] + '_stim_onset_unit{:03d}'.format(i))
             fig.close()
+
+    #-------------------------------------------------------------------------------------
+    # Selectivity
+    #-------------------------------------------------------------------------------------
+
+    elif action == 'selectivity':
+
+        try:
+            lower = float(args[0])
+        except:
+            lower = None
+
+        try:
+            higher = float(args[1])
+        except:
+            higher = None
+
+        # Model
+        m = p['model']
+
+        trialsfile = get_trialsfile(p)
+        dprime     = get_choice_selectivity(trialsfile,lower_bon=lower,higher_bon=higher)
+
+        def get_first(x, p):
+            return x[:int(p*len(x))]
+
+        psig  = 0.25
+        units = np.arange(len(dprime))
+        try:
+            idx = np.argsort(abs(dprime[m.EXC]))[::-1]
+            exc = get_first(units[m.EXC][idx], psig)
+
+            idx = np.argsort(abs(dprime[m.INH]))[::-1]
+            inh = get_first(units[m.INH][idx], psig)
+
+            idx = np.argsort(dprime[exc])[::-1]
+            units_exc = list(exc[idx])
+
+            idx = np.argsort(dprime[inh])[::-1]
+            units_inh = list(units[inh][idx])
+
+            units  = units_exc + units_inh
+            dprime = dprime[units]
+        except AttributeError:
+            idx = np.argsort(abs(dprime))[::-1]
+            all = get_first(units[idx], psig)
+
+            idx    = np.argsort(dprime[all])[::-1]
+            units  = list(units[all][idx])
+            dprime = dprime[units]
+
+        # Save d'
+        filename = get_dprimefile(p)
+        np.savetxt(filename, dprime)
+        print("[ {}.do ] d\' saved to {}".format(THIS, filename))
+
+        # Save selectivity
+        filename = get_selectivityfile(p)
+        np.savetxt(filename, units, fmt='%d')
+        print("[ {}.do ] Choice selectivity saved to {}".format(THIS, filename))
+
+    #-------------------------------------------------------------------------------------
 
     else:
         print("[ {}.do ] Unrecognized action.".format(THIS))
