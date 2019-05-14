@@ -270,7 +270,8 @@ def plot_unit(unit, sortedfile, plot, t0=0, tmin=None, tmax=None, **kwargs):
     return np.concatenate(all)
 
 #=========================================================================================
-# TODO there might be a better way to calculate dprime in this case
+# there might be a better way to calculate dprime in this case,
+# TODO exclude trials with different duration
 
 def get_choice_selectivity(trialsfile, lower_bon=None, higher_bon=None):
     """
@@ -279,9 +280,9 @@ def get_choice_selectivity(trialsfile, lower_bon=None, higher_bon=None):
     """
 
     if lower_bon == None:
-        lower_bon = 150.2
+        lower_bon = 100
     if higher_bon == None:
-        higher_bon = 150.2
+        higher_bon = 100
 
     # Load trials
     trials, ntrials = load_trials(trialsfile)
