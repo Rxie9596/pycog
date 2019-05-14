@@ -451,6 +451,8 @@ def do(action, args, p):
         plot.axis_off('bottom')
 
         plot.plot(1e-3 * rnn.t, rnn.u[0], color=Figure.colors('red'), lw=0.5)
+        plot.lim('y', rnn.u[0])
+        plot.xlim(1e-3 * rnn.t[0], 1e-3 * rnn.t[-1])
 
         # -----------------------------------------------------------------------------------------
         # Output
