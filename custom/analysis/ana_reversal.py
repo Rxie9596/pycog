@@ -391,6 +391,8 @@ def do(action, args, p):
         # Plot unit
         try:
             unit = int(args[1])
+            if unit == -1:
+                unit = None
         except:
             unit = None
 
